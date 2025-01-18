@@ -21,10 +21,20 @@ describe("User login into branch with valid credential and get status code 200",
       failOnStatusCode: false,
     }).then((response) => {
       if (response.status === 200) {
-        const { token } = response.body;
+        const { token, user, branch } = response.body;
+        const currentDate = new Date().toISOString();
 
         cy.writeFile("cypress/fixtures/userToken.json", {
           userAccessToken: token,
+        });
+        cy.writeFile("cypress/fixtures/userId.json", {
+          userId: user,
+        });
+        cy.writeFile("cypress/fixtures/branchId.json", {
+          branchId: branch._id,
+        });
+        cy.writeFile("cypress/fixtures/currentDate.json", {
+          currentDate: currentDate,
         });
 
         expect(response.status).to.eq(200);
