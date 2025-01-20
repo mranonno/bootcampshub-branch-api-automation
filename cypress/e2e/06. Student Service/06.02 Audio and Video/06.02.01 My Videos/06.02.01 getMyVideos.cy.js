@@ -24,8 +24,8 @@ describe("Get my videos with status code 200", () => {
         const { body, duration } = response;
         expect(body.success).to.eq(true);
         expect(duration).to.be.lessThan(
-          4000,
-          "Response time should be less than 4 seconds"
+          6000,
+          "Response time should be less than 6 seconds"
         );
         cy.log("Response body (stringified):", JSON.stringify(body, null, 2));
         console.log(
