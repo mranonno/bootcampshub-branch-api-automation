@@ -1,6 +1,7 @@
-describe("Get staff profile data with status code 200", () => {
+describe("Content publish switch with status code 200", () => {
   let accessToken;
   let branchId;
+  let contentId;
   before(() => {
     cy.readFile("cypress/fixtures/userToken.json").then((data) => {
       accessToken = data.userAccessToken;
@@ -8,15 +9,19 @@ describe("Get staff profile data with status code 200", () => {
     cy.readFile("cypress/fixtures/branchId.json").then((branch) => {
       branchId = branch.branchId;
     });
+    cy.readFile("cypress/fixtures/contentId.json").then((content) => {
+      contentId = content.contentId;
+    });
   });
-  it("Checking if should be able to get staff profile data", () => {
+  it("Checking if should be able to content publish switch", () => {
     cy.request({
-      method: "GET",
-      url: "/organization/staff/profile",
+      method: "PATCH",
+      url: `/content/switch/${contentId}`,
       headers: {
         Authorization: `Bearer ${accessToken}`,
         Branch: branchId,
       },
+      body: { isPublished: true },
       failOnStatusCode: false,
     }).then((response) => {
       expect(response.status).to.eq(200, "Expected status code is 200");

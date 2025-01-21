@@ -1,4 +1,4 @@
-describe("Get staff profile data with status code 200", () => {
+describe("Create content with status code 200", () => {
   let accessToken;
   let branchId;
   before(() => {
@@ -9,19 +9,36 @@ describe("Get staff profile data with status code 200", () => {
       branchId = branch.branchId;
     });
   });
-  it("Checking if should be able to get staff profile data", () => {
+  it("Checking if should be able to create content", () => {
     cy.request({
-      method: "GET",
-      url: "/organization/staff/profile",
+      method: "POST",
+      url: "/content/add",
       headers: {
         Authorization: `Bearer ${accessToken}`,
         Branch: branchId,
+      },
+      body: {
+        name: "API testing by cypress",
+        description: "API Testing description",
+        category: "other",
+        tags: ["SQA_Group"],
+        dependencies: ["6638d74ef440fe001935a695"],
+        attachments: [],
+        groups: ["668b495587a84f002010f405"],
+        courses: [],
+        programs: ["6647be35e44f020019e06b65"],
+        isFree: true,
+        thumbnail: "",
+        slide: "66252be2cd096c0019f46502",
       },
       failOnStatusCode: false,
     }).then((response) => {
       expect(response.status).to.eq(200, "Expected status code is 200");
       if (response.status === 200) {
         const { body, duration } = response;
+        cy.writeFile("cypress/fixtures/contentId.json", {
+          contentId: body.content._id,
+        });
         expect(body.success).to.eq(true);
         expect(duration).to.be.lessThan(
           2000,

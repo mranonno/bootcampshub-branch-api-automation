@@ -1,6 +1,7 @@
-describe("Get staff profile data with status code 200", () => {
+describe("Update content with status code 200", () => {
   let accessToken;
   let branchId;
+  let contentId;
   before(() => {
     cy.readFile("cypress/fixtures/userToken.json").then((data) => {
       accessToken = data.userAccessToken;
@@ -8,14 +9,31 @@ describe("Get staff profile data with status code 200", () => {
     cy.readFile("cypress/fixtures/branchId.json").then((branch) => {
       branchId = branch.branchId;
     });
+    cy.readFile("cypress/fixtures/contentId.json").then((content) => {
+      contentId = content.contentId;
+    });
   });
-  it("Checking if should be able to get staff profile data", () => {
+  it("Checking if should be able to update content", () => {
     cy.request({
-      method: "GET",
-      url: "/organization/staff/profile",
+      method: "PATCH",
+      url: `/content/edit/${contentId}`,
       headers: {
         Authorization: `Bearer ${accessToken}`,
         Branch: branchId,
+      },
+      body: {
+        name: "API testing by cypress updated",
+        description: "API Testing description",
+        category: "other",
+        tags: ["SQA_Group"],
+        dependencies: ["6638d74ef440fe001935a695"],
+        attachments: [],
+        groups: ["668b495587a84f002010f405"],
+        courses: [],
+        programs: ["6647be35e44f020019e06b65"],
+        isFree: true,
+        thumbnail: "",
+        slide: "66252be2cd096c0019f46502",
       },
       failOnStatusCode: false,
     }).then((response) => {

@@ -1,4 +1,4 @@
-describe("Get staff profile data with status code 200", () => {
+describe("Publish to blog with status code 200", () => {
   let accessToken;
   let branchId;
   before(() => {
@@ -9,10 +9,10 @@ describe("Get staff profile data with status code 200", () => {
       branchId = branch.branchId;
     });
   });
-  it("Checking if should be able to get staff profile data", () => {
+  it("Checking if should be able to publish to blog", () => {
     cy.request({
-      method: "GET",
-      url: "/organization/staff/profile",
+      method: "POST",
+      url: "/content/publish-to-blog/678f76eaa1c65d001940adfb",
       headers: {
         Authorization: `Bearer ${accessToken}`,
         Branch: branchId,

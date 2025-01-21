@@ -1,6 +1,7 @@
-describe("Get staff profile data with status code 200", () => {
+describe("Delete content with status code 200", () => {
   let accessToken;
   let branchId;
+  let contentId;
   before(() => {
     cy.readFile("cypress/fixtures/userToken.json").then((data) => {
       accessToken = data.userAccessToken;
@@ -8,11 +9,14 @@ describe("Get staff profile data with status code 200", () => {
     cy.readFile("cypress/fixtures/branchId.json").then((branch) => {
       branchId = branch.branchId;
     });
+    cy.readFile("cypress/fixtures/contentId.json").then((content) => {
+      contentId = content.contentId;
+    });
   });
-  it("Checking if should be able to get staff profile data", () => {
+  it("Checking if should be able to delete content", () => {
     cy.request({
-      method: "GET",
-      url: "/organization/staff/profile",
+      method: "DELETE",
+      url: `/content/delete/${contentId}`,
       headers: {
         Authorization: `Bearer ${accessToken}`,
         Branch: branchId,
