@@ -1,4 +1,4 @@
-describe("Get staff profile data with status code 200", () => {
+describe("Get all documents with status code 200", () => {
   let accessToken;
   let branchId;
   before(() => {
@@ -9,10 +9,10 @@ describe("Get staff profile data with status code 200", () => {
       branchId = branch.branchId;
     });
   });
-  it("Checking if should be able to get staff profile data", () => {
+  it("Checking if should be able to get all documents", () => {
     cy.request({
       method: "GET",
-      url: "/organization/staff/profile",
+      url: "/document/getall/document?page=1&limit=10&sort=newest",
       headers: {
         Authorization: `Bearer ${accessToken}`,
         Branch: branchId,
