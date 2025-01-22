@@ -1,4 +1,4 @@
-describe("Add interview question with status code 200", () => {
+describe("Add interview question with status code 201", () => {
   let accessToken;
   let branchId;
   before(() => {

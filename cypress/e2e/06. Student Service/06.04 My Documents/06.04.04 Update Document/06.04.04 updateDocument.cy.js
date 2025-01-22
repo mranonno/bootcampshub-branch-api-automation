@@ -1,4 +1,4 @@
-describe("Edit document with status code 200", () => {
+describe("Edit document with status code 201", () => {
   let accessToken;
   let branchId;
   let documentId;

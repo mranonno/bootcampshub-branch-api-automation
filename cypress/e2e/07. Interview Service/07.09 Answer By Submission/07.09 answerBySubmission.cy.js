@@ -12,7 +12,7 @@ describe("Get answer by submission with status code 200", () => {
   it("Checking if should be able to get answer by submission", () => {
     cy.request({
       method: "GET",
-      url: "/interview/answerbysubmission/677412cc00a7a42becd246a8",
+      url: "/interview/answerbysubmission/66e50a991aa84e001913d3bb",
       headers: {
         Authorization: `Bearer ${accessToken}`,
         Branch: branchId,

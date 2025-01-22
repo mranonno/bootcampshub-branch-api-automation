@@ -1,4 +1,4 @@
-describe("Create diagram with status code 200", () => {
+describe("Create diagram with status code 201", () => {
   let accessToken;
   let branchId;
   before(() => {
