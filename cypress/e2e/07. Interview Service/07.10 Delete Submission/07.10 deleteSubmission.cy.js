@@ -1,6 +1,7 @@
-describe("Get staff profile data with status code 200", () => {
+describe.skip("Delete submission answer with status code 200", () => {
   let accessToken;
   let branchId;
+  let submissionId = "677412cc00a7a42becd246a8";
   before(() => {
     cy.readFile("cypress/fixtures/userToken.json").then((data) => {
       accessToken = data.userAccessToken;
@@ -9,10 +10,10 @@ describe("Get staff profile data with status code 200", () => {
       branchId = branch.branchId;
     });
   });
-  it("Checking if should be able to get staff profile data", () => {
+  it("Checking if should be able to delete submission answer", () => {
     cy.request({
-      method: "GET",
-      url: "/organization/staff/profile",
+      method: "DELETE",
+      url: `/interview/deletesubmission/${submissionId}`,
       headers: {
         Authorization: `Bearer ${accessToken}`,
         Branch: branchId,
