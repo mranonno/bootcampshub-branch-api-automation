@@ -1,6 +1,7 @@
-describe("Get staff profile data with status code 200", () => {
+describe("Edit interview question with status code 200", () => {
   let accessToken;
   let branchId;
+  let interviewId;
   before(() => {
     cy.readFile("cypress/fixtures/userToken.json").then((data) => {
       accessToken = data.userAccessToken;
@@ -8,14 +9,30 @@ describe("Get staff profile data with status code 200", () => {
     cy.readFile("cypress/fixtures/branchId.json").then((branch) => {
       branchId = branch.branchId;
     });
+    cy.readFile("cypress/fixtures/interviewId.json").then((interview) => {
+      interviewId = interview.interviewId;
+    });
   });
-  it("Checking if should be able to get staff profile data", () => {
+  it("Checking if should be able to edit interview question", () => {
     cy.request({
-      method: "GET",
-      url: "/organization/staff/profile",
+      method: "PATCH",
+      url: `/interview/edit/${interviewId}`,
       headers: {
         Authorization: `Bearer ${accessToken}`,
         Branch: branchId,
+      },
+      body: {
+        name: "Create interview question for API testing update",
+        isActive: true,
+        index: 1,
+        type: "ai",
+        groups: ["676c60516e5fbf880cbecf24"],
+        aiData: {
+          instruction: "checking",
+          duration: 19,
+          complexity: "Easy",
+          customQuestions: "",
+        },
       },
       failOnStatusCode: false,
     }).then((response) => {
