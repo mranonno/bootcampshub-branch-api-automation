@@ -1,4 +1,4 @@
-describe("Get staff profile data with status code 200", () => {
+describe("Add interview question with status code 200", () => {
   let accessToken;
   let branchId;
   before(() => {
@@ -9,19 +9,35 @@ describe("Get staff profile data with status code 200", () => {
       branchId = branch.branchId;
     });
   });
-  it("Checking if should be able to get staff profile data", () => {
+  it("Checking if should be able to add interview question", () => {
     cy.request({
-      method: "GET",
-      url: "/organization/staff/profile",
+      method: "POST",
+      url: "/interview/addinterview",
       headers: {
         Authorization: `Bearer ${accessToken}`,
         Branch: branchId,
       },
+      body: {
+        name: "Create interview question for API testing",
+        isActive: true,
+        index: "1",
+        type: "ai",
+        groups: ["676c60516e5fbf880cbecf24"],
+        aiData: {
+          instruction: "checking",
+          duration: "19",
+          complexity: "Easy",
+          customQuestions: "",
+        },
+      },
       failOnStatusCode: false,
     }).then((response) => {
-      expect(response.status).to.eq(200, "Expected status code is 200");
-      if (response.status === 200) {
+      expect(response.status).to.eq(201, "Expected status code is 200");
+      if (response.status === 201) {
         const { body, duration } = response;
+        cy.writeFile("cypress/fixtures/interviewId.json", {
+          interviewId: body.interview._id,
+        });
         expect(body.success).to.eq(true);
         expect(duration).to.be.lessThan(
           2000,
