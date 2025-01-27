@@ -1,6 +1,6 @@
-describe("Get upcoming meetings with status code 200", () => {
+describe("Get recycle bin history with status code 200", () => {
   let accessToken;
-  let branchId, zoomId;
+  let branchId;
   before(() => {
     cy.readFile("cypress/fixtures/userToken.json").then((data) => {
       accessToken = data.userAccessToken;
@@ -8,19 +8,20 @@ describe("Get upcoming meetings with status code 200", () => {
     cy.readFile("cypress/fixtures/branchId.json").then((branch) => {
       branchId = branch.branchId;
     });
-    cy.readFile("cypress/fixtures/zoomId.json").then((zoom) => {
-      zoomId = zoom.zoomId;
-    });
   });
-  it("Checking if should be able to get upcoming meetings", () => {
+  it("Checking if should be able to get recycle bin history", () => {
     cy.request({
-      method: "GET",
-      url: "/organization/integration/zoom/meetings?type=upcoming_meetings&page=1&pageSize=10",
+      method: "POST",
+      url: "/history/recyclebin",
       headers: {
         Authorization: `Bearer ${accessToken}`,
         Branch: branchId,
-        ZoomId: zoomId,
       },
+      body: { collectionName: "Certificate" },
+      // {"collectionName":"Media"}
+      // {"collectionName":"MockInterview"}
+      // {"collectionName":"ChapterV2"}
+      // {"collectionName":"Term"}
       failOnStatusCode: false,
     }).then((response) => {
       expect(response.status).to.eq(200, "Expected status code is 200");

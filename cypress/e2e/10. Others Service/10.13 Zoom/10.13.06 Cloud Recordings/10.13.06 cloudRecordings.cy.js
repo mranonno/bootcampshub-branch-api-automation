@@ -1,6 +1,6 @@
-describe("Get staff profile data with status code 200", () => {
+describe("Get cloud recordings with status code 200", () => {
   let accessToken;
-  let branchId;
+  let branchId, zoomId;
   before(() => {
     cy.readFile("cypress/fixtures/userToken.json").then((data) => {
       accessToken = data.userAccessToken;
@@ -8,14 +8,18 @@ describe("Get staff profile data with status code 200", () => {
     cy.readFile("cypress/fixtures/branchId.json").then((branch) => {
       branchId = branch.branchId;
     });
+    cy.readFile("cypress/fixtures/zoomId.json").then((zoom) => {
+      zoomId = zoom.zoomId;
+    });
   });
-  it("Checking if should be able to get staff profile data", () => {
+  it("Checking if should be able to get cloud recordings", () => {
     cy.request({
       method: "GET",
-      url: "/organization/staff/profile",
+      url: "/organization/integration/zoom/recordings?page=1&limit=5",
       headers: {
         Authorization: `Bearer ${accessToken}`,
         Branch: branchId,
+        ZoomId: zoomId,
       },
       failOnStatusCode: false,
     }).then((response) => {
